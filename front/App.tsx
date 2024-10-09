@@ -1,28 +1,16 @@
 import React from 'react';
-
-import {SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import AuthHomeScreen from './src/screens/AuthHomeScreen.tsx';
+import AuthStackNavigator from './src/navigation/AuthStackNavigator.tsx';
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <AuthHomeScreen />
+      <AuthStackNavigator />
     </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'red',
-  },
-  input: {
-    borderWidth: 2,
-    borderColor: 'black',
-  },
-  inputContainer: {
-    flexDirection: 'row',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;
