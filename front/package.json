@@ -3,15 +3,21 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest"
+    "android": "./node_modules/.bin/react-native run-android",
+    "ios": "./node_modules/.bin/react-native run-ios",
+    "lint": "./node_modules/.bin/eslint .",
+    "start": "./node_modules/.bin/react-native start",
+    "test": "./node_modules/.bin/jest"
   },
   "dependencies": {
+    "@react-native-masked-view/masked-view": "^0.3.1",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/stack": "^6.4.1",
     "react": "18.3.1",
-    "react-native": "0.75.4"
+    "react-native": "0.75.4",
+    "react-native-gesture-handler": "^2.20.0",
+    "react-native-safe-area-context": "^4.11.0",
+    "react-native-screens": "^3.34.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
