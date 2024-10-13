@@ -4,6 +4,7 @@ import InputField from '../../components/InputField.tsx';
 import CustomButton from '../../components/CustomButton.tsx';
 import useForm from '../../hooks/useForm.ts';
 import {validateLogin} from '../../utils';
+import useAuth from '../../hooks/queries/useAuth.ts';
 
 function LoginScreen() {
   // const [email, setEmail] = useState('');
@@ -42,6 +43,7 @@ function LoginScreen() {
   // };
 
   const passwordRef = useRef<TextInput | null>(null);
+  const {loginMutation} = useAuth();
 
   const login = useForm({
     initialValue: {email: '', password: ''},
@@ -49,7 +51,8 @@ function LoginScreen() {
   });
 
   const handleSubmit = () => {
-    console.log('values', login?.values);
+    // console.log('values', login?.values);
+    loginMutation.mutate(login.values);
   };
 
   return (
