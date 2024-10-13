@@ -1,10 +1,10 @@
 import React, {useRef} from 'react';
 import {SafeAreaView, StyleSheet, TextInput, View} from 'react-native';
-import InputField from '../../components/InputField.tsx';
-import CustomButton from '../../components/CustomButton.tsx';
-import useForm from '../../hooks/useForm.ts';
-import {validateLogin} from '../../utils';
-import useAuth from '../../hooks/queries/useAuth.ts';
+import InputField from '@/components/InputField.tsx';
+import CustomButton from '@/components/CustomButton.tsx';
+import useForm from '@/hooks/useForm.ts';
+import {validateLogin} from '@/utils';
+import useAuth from '@/hooks/queries/useAuth.ts';
 
 function LoginScreen() {
   // const [email, setEmail] = useState('');
