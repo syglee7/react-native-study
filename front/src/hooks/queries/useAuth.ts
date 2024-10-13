@@ -11,7 +11,7 @@ import {
   UseQueryCustomOptions,
 } from '../../types/common.ts';
 import {removeEncryptedStorage, setEncryptStorage} from '../../utils';
-import {removeHeader, setHeader} from '../../utils/header.ts';
+import {removeHeader, setHeader} from '../../utils';
 import {useEffect} from 'react';
 import queryClient from '../../api/queryClient.ts';
 import {numbers, queryKeys, storageKeys} from '../../constants';
@@ -57,7 +57,7 @@ function useGetRefreshToken() {
       setHeader('Authorization', `Bearer ${data?.accessToken}`);
       setEncryptStorage(storageKeys.REFRESH_TOKEN, data?.refreshToken);
     }
-  }, [isSuccess, data]);
+  }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
