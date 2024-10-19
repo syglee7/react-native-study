@@ -7,10 +7,7 @@ import {
   postSignup,
   ResponseProfile,
 } from '@/api/auth.ts';
-import {
-  UseMutationCustomOptions,
-  UseQueryCustomOptions,
-} from '@/types/common.ts';
+import {UseMutationCustomOptions, UseQueryCustomOptions} from '@/types';
 import {removeEncryptedStorage, setEncryptStorage} from '@/utils';
 import {removeHeader, setHeader} from '@/utils';
 import {useEffect} from 'react';

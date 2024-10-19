@@ -1,9 +1,8 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from 'react-native';
@@ -15,7 +14,9 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import CustomButton from '@/components/CustomButton.tsx';
 import useForm from '@/hooks/useForm.ts';
 import {validateAddPost} from '@/utils';
-import addPostHeaderRight from '@/components/AddPostHeaderRight.tsx';
+import useMutateCreatePost from '@/hooks/queries/useMutateCreatePost.ts';
+import {MarkerColor} from '@/types/domain.ts';
+import AddPostHeaderRight from '@/components/AddPostHeaderRight.tsx';
 
 type AddPostScreenProps = StackScreenProps<
   MapStackParamList,
@@ -25,19 +26,37 @@ type AddPostScreenProps = StackScreenProps<
 function AddPostScreen({route, navigation}: AddPostScreenProps) {
   const {location} = route.params;
   const descriptionRef = useRef<TextInput | null>(null);
-
+  const createPost = useMutateCreatePost();
   const addPost = useForm({
     initialValue: {title: '', description: ''},
     validate: validateAddPost,
   });
+  const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
+  const [score, setScore] = useState(5);
+  const [address, setAddress] = useState('');
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const body = {
+      date: new Date(),
+      title: addPost.values.title,
+      description: addPost.values.description,
+      color: markerColor,
+      score,
+      imageUris: [],
+    };
+    createPost.mutate(
+      {address, ...location, ...body},
+      {
+        onSuccess: () => navigation.goBack(),
+      },
+    );
+  };
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => addPostHeaderRight(handleSubmit),
+      headerRight: () => AddPostHeaderRight(handleSubmit),
     });
-  }, []);
+  });
 
   return (
     <SafeAreaView style={styles.container}>
