@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, View} from 'react-native';
 import MapView, {
   Callout,
   LatLng,
@@ -7,7 +7,7 @@ import MapView, {
   Marker,
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
-import {colors} from '@/constants';
+import {alerts, colors, mapNavigations} from '@/constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -32,12 +32,28 @@ function MapHomeScreen(/*{navigation}*/) {
   const navigation = useNavigation<Navigation>();
   const {userLocation, isUserLocationError} = useUserLocation();
   const mapRef = useRef<MapView | null>(null);
-  const [selectLocation, setSelectLocation] = useState<LatLng>();
+  const [selectLocation, setSelectLocation] = useState<LatLng | null>();
   usePermission('LOCATION');
 
   const handleLongPressMapView = ({nativeEvent}: LongPressEvent) => {
     setSelectLocation(nativeEvent.coordinate);
   };
+
+  const handlePressAddPost = () => {
+    if (!selectLocation) {
+      return Alert.alert(
+        alerts.NOT_SELECTED_LOCATION.TITLE,
+        alerts.NOT_SELECTED_LOCATION.DESCRIPTION,
+      );
+    }
+
+    navigation.navigate(mapNavigations.ADD_POST, {
+      location: selectLocation,
+    });
+
+    setSelectLocation(null);
+  };
+
   const handlePressUserLocation = () => {
     if (isUserLocationError) {
       return;
@@ -86,6 +102,9 @@ function MapHomeScreen(/*{navigation}*/) {
         <Ionicons name="menu" color={colors.WHITE} size={25} />
       </Pressable>
       <View style={styles.buttonList}>
+        <Pressable style={styles.mapButton} onPress={handlePressAddPost}>
+          <MaterialIcons name="add" color={colors.WHITE} size={25} />
+        </Pressable>
         <Pressable style={styles.mapButton} onPress={handlePressUserLocation}>
           <MaterialIcons name="my-location" color={colors.WHITE} size={25} />
         </Pressable>
