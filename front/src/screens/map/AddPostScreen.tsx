@@ -13,13 +13,15 @@ import InputField from '@/components/InputField.tsx';
 import Octicons from 'react-native-vector-icons/Octicons';
 import CustomButton from '@/components/CustomButton.tsx';
 import useForm from '@/hooks/useForm.ts';
-import {validateAddPost} from '@/utils';
+import {getDateWithSeparator, validateAddPost} from '@/utils';
 import useMutateCreatePost from '@/hooks/queries/useMutateCreatePost.ts';
 import {MarkerColor} from '@/types/domain.ts';
 import AddPostHeaderRight from '@/components/AddPostHeaderRight.tsx';
 import useGetAddress from '@/hooks/useGetAddress.ts';
 import MarkerSelector from '@/components/MarkerSelector.tsx';
 import ScoreInput from '@/components/ScoreInput.tsx';
+import DatePickerOption from '@/components/DatePickerOption.tsx';
+import useModal from '@/hooks/useModal.ts';
 
 type AddPostScreenProps = StackScreenProps<
   MapStackParamList,
@@ -36,7 +38,20 @@ function AddPostScreen({route, navigation}: AddPostScreenProps) {
   });
   const [markerColor, setMarkerColor] = useState<MarkerColor>('RED');
   const [score, setScore] = useState(5);
+  const [date, setDate] = useState(new Date());
+  const [isPicked, setIsPicked] = useState(false);
+  const dateOption = useModal();
+
   const address = useGetAddress(location);
+
+  const handleConfirmDate = () => {
+    setIsPicked(true);
+    dateOption.hide();
+  };
+
+  const handleChangeDate = (pickedDate: Date) => {
+    setDate(pickedDate);
+  };
 
   const handleSelectMarker = (name: MarkerColor) => {
     setMarkerColor(name);
@@ -48,7 +63,7 @@ function AddPostScreen({route, navigation}: AddPostScreenProps) {
 
   const handleSubmit = () => {
     const body = {
-      date: new Date(),
+      date,
       title: addPost.values.title,
       description: addPost.values.description,
       color: markerColor,
@@ -80,7 +95,12 @@ function AddPostScreen({route, navigation}: AddPostScreenProps) {
               <Octicons name="location" size={16} color={colors.GRAY_500} />
             }
           />
-          <CustomButton label="날짜 선택" variant="outlined" size="large" />
+          <CustomButton
+            label={isPicked ? getDateWithSeparator(date, '. ') : '날짜 선택'}
+            variant="outlined"
+            size="large"
+            onPress={dateOption.show}
+          />
           <InputField
             placeholder="제목을 입력하세요."
             error={addPost.errors.title}
@@ -105,6 +125,12 @@ function AddPostScreen({route, navigation}: AddPostScreenProps) {
             onPressMarker={handleSelectMarker}
           />
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
+          <DatePickerOption
+            isVisible={dateOption.isVisible}
+            date={date}
+            onChangeDate={handleChangeDate}
+            onConfirmDate={handleConfirmDate}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
