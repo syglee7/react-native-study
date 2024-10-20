@@ -11,23 +11,23 @@ import {
 import {StackScreenProps} from '@react-navigation/stack';
 import {MapStackParamList} from '@/navigations/stack/MapStackNavigator.tsx';
 import {colors, mapNavigations} from '@/constants';
-import InputField from '@/components/InputField.tsx';
+import InputField from '@/components/common/InputField.tsx';
 import Octicons from 'react-native-vector-icons/Octicons';
-import CustomButton from '@/components/CustomButton.tsx';
+import CustomButton from '@/components/common/CustomButton.tsx';
 import useForm from '@/hooks/useForm.ts';
 import {getDateWithSeparator, validateAddPost} from '@/utils';
 import useMutateCreatePost from '@/hooks/queries/useMutateCreatePost.ts';
 import {MarkerColor} from '@/types/domain.ts';
-import AddPostHeaderRight from '@/components/AddPostHeaderRight.tsx';
+import AddPostHeaderRight from '@/components/post/AddPostHeaderRight.tsx';
 import useGetAddress from '@/hooks/useGetAddress.ts';
-import MarkerSelector from '@/components/MarkerSelector.tsx';
-import ScoreInput from '@/components/ScoreInput.tsx';
-import DatePickerOption from '@/components/DatePickerOption.tsx';
+import MarkerSelector from '@/components/post/MarkerSelector.tsx';
+import ScoreInput from '@/components/post/ScoreInput.tsx';
+import DatePickerOption from '@/components/post/DatePickerOption.tsx';
 import useModal from '@/hooks/useModal.ts';
-import ImageInput from '@/components/ImageInput.tsx';
+import ImageInput from '@/components/post/ImageInput.tsx';
 import usePermission from '@/hooks/usePermission.ts';
 import useImagePicker from '@/hooks/useImagePicker.ts';
-import PreviewImageList from '@/components/PreviewImageList.tsx';
+import PreviewImageList from '@/components/common/PreviewImageList.tsx';
 
 type AddPostScreenProps = StackScreenProps<
   MapStackParamList,
@@ -140,6 +140,7 @@ function AddPostScreen({route, navigation}: AddPostScreenProps) {
               imageUris={imagePicker.imageUris}
               onDelete={imagePicker.delete}
               onChangeOrder={imagePicker.changeOrder}
+              showOption={true}
             />
           </View>
           <DatePickerOption

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import useGetInfinitePosts from '@/hooks/queries/useGetInfinitePosts.ts';
-import FeedItem from '@/components/FeedItem.tsx';
+import FeedItem from '@/components/feed/FeedItem.tsx';
 
 function FeedList() {
   const {

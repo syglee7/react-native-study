@@ -20,9 +20,9 @@ import {MainDrawerParamList} from '@/navigations/drawer/MainDrawerNavigator.tsx'
 import useUserLocation from '@/hooks/useUserLocation.ts';
 import usePermission from '@/hooks/usePermission.ts';
 import mapStyle from '@/style/mapStyle.ts';
-import CustomMarker from '@/components/CustomMarker.tsx';
+import CustomMarker from '@/components/post/CustomMarker.tsx';
 import useGetMarkets from '@/hooks/queries/useGetMarkets.ts';
-import MarkerModal from '@/components/MarkerModal.tsx';
+import MarkerModal from '@/components/map/MarkerModal.tsx';
 import useModal from '@/hooks/useModal.ts';
 
 type Navigation = CompositeNavigationProp<

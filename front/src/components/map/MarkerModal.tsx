@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import useGetPost from '@/hooks/queries/useGetPost.ts';
 import {colors} from '@/constants';
-import CustomMarker from '@/components/CustomMarker.tsx';
+import CustomMarker from '@/components/post/CustomMarker.tsx';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {getDateWithSeparator} from '@/utils';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

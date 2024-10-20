@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import HeaderButton from '@/components/HeaderButton.tsx';
+import HeaderButton from '@/components/common/HeaderButton.tsx';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {colors} from '@/constants';
 import {StackNavigationProp} from '@react-navigation/stack';
