@@ -1,10 +1,11 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import FeedList from '@/components/FeedList.tsx';
 
 function FeedHomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>피드</Text>
+      <FeedList />
     </SafeAreaView>
   );
 }
