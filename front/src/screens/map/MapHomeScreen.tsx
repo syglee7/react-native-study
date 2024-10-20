@@ -22,6 +22,8 @@ import usePermission from '@/hooks/usePermission.ts';
 import mapStyle from '@/style/mapStyle.ts';
 import CustomMarker from '@/components/CustomMarker.tsx';
 import useGetMarkets from '@/hooks/queries/useGetMarkets.ts';
+import MarkerModal from '@/components/MarkerModal.tsx';
+import useModal from '@/hooks/useModal.ts';
 
 type Navigation = CompositeNavigationProp<
   StackNavigationProp<MapStackParamList>,
@@ -34,8 +36,24 @@ function MapHomeScreen(/*{navigation}*/) {
   const {userLocation, isUserLocationError} = useUserLocation();
   const mapRef = useRef<MapView | null>(null);
   const [selectLocation, setSelectLocation] = useState<LatLng | null>();
+  const [markerId, setMarkerId] = useState<number | null>(null);
   const {data: markers = []} = useGetMarkets();
+  const markerModal = useModal();
   usePermission('LOCATION');
+
+  const moveMapView = (coordinate: LatLng) => {
+    mapRef.current?.animateToRegion({
+      ...coordinate,
+      longitudeDelta: 0.0421,
+      latitudeDelta: 0.0922,
+    });
+  };
+
+  const handlePressMarker = (id: number, coordinate: LatLng) => {
+    moveMapView(coordinate);
+    setMarkerId(id);
+    markerModal.show();
+  };
 
   const handleLongPressMapView = ({nativeEvent}: LongPressEvent) => {
     setSelectLocation(nativeEvent.coordinate);
@@ -61,12 +79,7 @@ function MapHomeScreen(/*{navigation}*/) {
       return;
     }
 
-    mapRef.current?.animateToRegion({
-      latitude: userLocation?.latitude,
-      longitude: userLocation?.longitude,
-      longitudeDelta: 0.0421,
-      latitudeDelta: 0.0922,
-    });
+    moveMapView(userLocation);
   };
 
   // 1. 나의 위치를 구하고
@@ -95,6 +108,7 @@ function MapHomeScreen(/*{navigation}*/) {
             score={score}
             coordinate={coordinate}
             color={color}
+            onPress={() => handlePressMarker(id, coordinate)}
           />
         ))}
         {selectLocation && (
@@ -116,6 +130,11 @@ function MapHomeScreen(/*{navigation}*/) {
           <MaterialIcons name="my-location" color={colors.WHITE} size={25} />
         </Pressable>
       </View>
+      <MarkerModal
+        markerId={markerId}
+        isVisible={markerModal.isVisible}
+        hide={markerModal.hide}
+      />
     </>
   );
 }
