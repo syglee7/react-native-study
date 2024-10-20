@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -22,6 +24,10 @@ import MarkerSelector from '@/components/MarkerSelector.tsx';
 import ScoreInput from '@/components/ScoreInput.tsx';
 import DatePickerOption from '@/components/DatePickerOption.tsx';
 import useModal from '@/hooks/useModal.ts';
+import ImageInput from '@/components/ImageInput.tsx';
+import usePermission from '@/hooks/usePermission.ts';
+import useImagePicker from '@/hooks/useImagePicker.ts';
+import PreviewImageList from '@/components/PreviewImageList.tsx';
 
 type AddPostScreenProps = StackScreenProps<
   MapStackParamList,
@@ -41,8 +47,11 @@ function AddPostScreen({route, navigation}: AddPostScreenProps) {
   const [date, setDate] = useState(new Date());
   const [isPicked, setIsPicked] = useState(false);
   const dateOption = useModal();
-
   const address = useGetAddress(location);
+  const imagePicker = useImagePicker({
+    initialImage: [],
+  });
+  usePermission('PHOTO');
 
   const handleConfirmDate = () => {
     setIsPicked(true);
@@ -125,6 +134,10 @@ function AddPostScreen({route, navigation}: AddPostScreenProps) {
             onPressMarker={handleSelectMarker}
           />
           <ScoreInput score={score} onChangeScore={handleChangeScore} />
+          <View style={styles.imageViewer}>
+            <ImageInput onChange={imagePicker.handleChange} />
+            <PreviewImageList imageUris={imagePicker.imageUris} />
+          </View>
           <DatePickerOption
             isVisible={dateOption.isVisible}
             date={date}
@@ -149,6 +162,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     marginBottom: 10,
+  },
+  imageViewer: {
+    flexDirection: 'row',
   },
 });
 
