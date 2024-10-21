@@ -1,4 +1,4 @@
-import {Marker, UseMutationCustomOptions} from '@/types';
+import {UseMutationCustomOptions} from '@/types';
 import {useMutation} from '@tanstack/react-query';
 import {deletePost} from '@/api';
 import queryClient from '@/api/queryClient.ts';

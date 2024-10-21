@@ -2,7 +2,7 @@ import {LatLng} from 'react-native-maps';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {errorMessages} from '@/constants';
-import Config from "react-native-config";
+import Config from 'react-native-config';
 
 function useGetAddress(location: LatLng) {
   const {latitude, longitude} = location;
